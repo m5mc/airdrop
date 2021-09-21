@@ -1,0 +1,20 @@
+qairdrop.airdrop=Airdrop
+item.qairdrop.supply.name=Supply Signal
+entity.qairdrop.airdrop.name=Airdrop
+entity.qairdrop.supply.name=Supply Signal
+
+qairdrop.marker.status.called=CALLED AIRDROP
+qairdrop.marker.status.inbound=AIRDROP INBOUND
+qairdrop.marker.status.dropping.0=DROPPING
+qairdrop.marker.status.dropping.1=DROPPING.
+qairdrop.marker.status.dropping.2=DROPPING..
+qairdrop.marker.status.dropping.3=DROPPING...
+qairdrop.marker.status.ready=GO AHEAD, TAKE IT
+
+qairdrop.popup.status.called=Called airdrop at %d %d
+qairdrop.popup.status.inbound=Airdrop at %d %d
+qairdrop.popup.status.dropping.0=Dropping
+qairdrop.popup.status.dropping.1=Dropping.
+qairdrop.popup.status.dropping.2=Dropping..
+qairdrop.popup.status.dropping.3=Dropping...
+qairdrop.popup.status.ready=On the ground

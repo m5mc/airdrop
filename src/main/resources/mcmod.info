@@ -1,0 +1,16 @@
+[
+    {
+      "modid": "qairdrop",
+      "name": "AirDrop Mod",
+      "description": "Airdrop Mod",
+      "version": "${version}",
+      "mcversion": "${mcversion}",
+      "url": "",
+      "updateUrl": "",
+      "authorList": ["Quant1um"],
+      "credits": "uwu",
+      "logoFile": "",
+      "screenshots": [],
+      "dependencies": []
+    }
+]
