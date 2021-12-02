@@ -98,42 +98,35 @@ public class EntityAirdrop extends Entity {
         return a + (b - a) * t;
     }
 
+    private double velY;
+
     private void doMove() {
-        this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+        this.move(MoverType.SELF, 0, velY, 0);
 
         float sub = getSubmergedVolume();
 
         float drag = lerp(0.99f, 0.7f, sub);
-        float grav = lerp(-0.05f, 0.01f, sub);
+        float grav = lerp(-0.05f, 0.005f, sub);
 
-        this.motionX *= drag;
-        this.motionY *= drag;
-        this.motionZ *= drag;
+        this.velY *= drag;
 
         if (!this.hasNoGravity()) {
-            this.motionY += grav;
-        }
-
-        if (sub > 0) {
-            this.setParachuting(false);
+            this.velY += grav;
         }
 
         if (this.onGround) {
-            this.motionX *= 0.7;
-            this.motionZ *= 0.7;
-            this.motionY = 0;
+            velY = 0;
+        }
 
-            if(this.isParachuting()) {
-                this.setParachuting(false);
-
-                if(!this.world.isRemote) this.world.createExplosion(this, posX, posY, posZ, 3f, true);
-            }
+        if ((sub > 0 || this.onGround) && this.isParachuting()) {
+            this.setParachuting(false);
+            if(!this.world.isRemote) this.world.createExplosion(this, posX, posY, posZ, 15f, true);
         }
 
         if(this.isParachuting()) {
             if(this.world.isRemote) {
-                for(int i = 0; i < 10; i++)
-                    this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, posX, posY, posZ, motionX, motionY + 0.04f, motionZ);
+                for(int i = 0; i < 100; i++)
+                    this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, posX, posY + i / 10f, posZ, Math.random() - 0.5, velY + 1f, Math.random() - 0.5);
             }
         }
 
@@ -142,9 +135,9 @@ public class EntityAirdrop extends Entity {
 
     @Override
     public void onUpdate() {
-        super.onUpdate();
-
         this.doMove();
+
+        super.onUpdate();
 
         if(!this.world.isRemote) {
             if (this.isWet()) {

@@ -53,7 +53,7 @@ public class ClientMarkerRenderer {
     @SubscribeEvent
     public static void renderMarkers(RenderWorldLastEvent e) {
         World world = Minecraft.getMinecraft().world;
-        float worldTime = world.getWorldTime() + e.getPartialTicks();
+        float worldTime = (Minecraft.getSystemTime() % 10000) / 50f;
 
         BlockPos.PooledMutableBlockPos pos = BlockPos.PooledMutableBlockPos.retain();
         for(ClientAirdropList.Entry entry : ClientAirdropList.iterate()) {

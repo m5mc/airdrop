@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -63,6 +64,8 @@ public class ModProvider {
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+        MinecraftForge.EVENT_BUS.register(Events.class);
+        logger().info("Da airdropes loaderd :DDDDD");
     }
 
     @EventHandler
@@ -89,7 +92,6 @@ public class ModProvider {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SUPPLY_GRENADE, 0, new ModelResourceLocation(MODID + ":supply_grenade", "inventory"));
     }
 
-    @Mod.EventBusSubscriber
     private static class Events {
         @SubscribeEvent
         public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {

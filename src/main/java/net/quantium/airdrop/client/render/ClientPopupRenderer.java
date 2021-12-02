@@ -35,21 +35,21 @@ public class ClientPopupRenderer {
             int minutes = time / 60;
             int seconds = time - 60 * minutes;
 
-            return String.format("%02d:%02d", minutes, seconds);
+            return I18n.format(ModProvider.MODID + ".popup.status.waiting", String.format("%02d:%02d", minutes, seconds), (int)entry.getPositionX(), (int)entry.getPositionZ());
         }
 
         if(entry.isSpawned()) {
-            return I18n.format(ModProvider.MODID + ".popup.status.ready");
+            return I18n.format(ModProvider.MODID + ".popup.status.ready", (int)entry.getPositionX(), (int)entry.getPositionZ());
         }
 
         int tick = (int) ((Minecraft.getSystemTime() / 1000) % 4);
-        return I18n.format(ModProvider.MODID + ".popup.status.dropping." + tick);
+        return I18n.format(ModProvider.MODID + ".popup.status.dropping." + tick, (int)entry.getPositionX(), (int)entry.getPositionZ());
     }
 
     private static String getInfo(ClientAirdropList.Entry entry) {
         if(entry.isCalled())
-            return I18n.format(ModProvider.MODID + ".popup.status.called", (int)entry.getPositionX(), (int)entry.getPositionZ());
-        return I18n.format(ModProvider.MODID + ".popup.status.inbound", (int)entry.getPositionX(), (int)entry.getPositionZ());
+            return I18n.format(ModProvider.MODID + ".popup.status.called");
+        return I18n.format(ModProvider.MODID + ".popup.status.inbound");
     }
 
     @SubscribeEvent
@@ -59,7 +59,7 @@ public class ClientPopupRenderer {
 
     @SubscribeEvent
     public static void popupRemove(ClientAirdropRemoved e) {
-        popups.removeIf(a -> a.entry == e.entry);
+        popups.stream().filter(a -> a.entry == e.entry).findFirst().ifPresent(a -> a.closed = true);
     }
 
     private static boolean mouse = false;

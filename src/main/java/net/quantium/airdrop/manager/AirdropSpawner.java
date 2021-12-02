@@ -125,7 +125,7 @@ public class AirdropSpawner extends WorldSavedData {
         MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
         if(server == null) return false;
 
-        return server.getCurrentPlayerCount() > 0 && AirdropManager.get().airdrops().allMatch(AirdropHandle::isCalled);
+        return server.getCurrentPlayerCount() >= 1 && AirdropManager.get().airdrops().allMatch(AirdropHandle::isCalled);
     }
 
     private void doUpdate() {
