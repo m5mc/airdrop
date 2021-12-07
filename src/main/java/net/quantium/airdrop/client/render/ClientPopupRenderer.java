@@ -38,12 +38,8 @@ public class ClientPopupRenderer {
             return I18n.format(ModProvider.MODID + ".popup.status.waiting", String.format("%02d:%02d", minutes, seconds), (int)entry.getPositionX(), (int)entry.getPositionZ());
         }
 
-        if(entry.isSpawned()) {
-            return I18n.format(ModProvider.MODID + ".popup.status.ready", (int)entry.getPositionX(), (int)entry.getPositionZ());
-        }
-
         int tick = (int) ((Minecraft.getSystemTime() / 1000) % 4);
-        return I18n.format(ModProvider.MODID + ".popup.status.dropping." + tick, (int)entry.getPositionX(), (int)entry.getPositionZ());
+        return I18n.format(ModProvider.MODID + ".popup.status.ready." + tick, (int)entry.getPositionX(), (int)entry.getPositionZ());
     }
 
     private static String getInfo(ClientAirdropList.Entry entry) {

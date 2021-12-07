@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class AirdropSpawner extends WorldSavedData {
     public static final String ID = ModProvider.MODID + ":spw";
-    public static final int MINUTE_TICKS = 20 * 60;
+    public static final int MINUTE = 60;
 
     public static AirdropSpawner get() {
         MapStorage storage = Objects.requireNonNull(DimensionManager.getWorld(0).getMapStorage());
@@ -47,7 +47,7 @@ public class AirdropSpawner extends WorldSavedData {
         super(ID);
     }
 
-    private int secondsUntilNextDrop = (int)(ModProvider.config().timeMin * MINUTE_TICKS);
+    private int secondsUntilNextDrop = (int)(ModProvider.config().timeMin * MINUTE);
     private int airdropsDropped = 0;
     private final Random random = new Random();
 
@@ -57,7 +57,7 @@ public class AirdropSpawner extends WorldSavedData {
         secondsUntilNextDrop = nbt.getInteger("SecondsUntilNextDrop");
 
         if(!nbt.hasKey("SecondsUntilNextDrop")) {
-            secondsUntilNextDrop = (int)(ModProvider.config().timeMin * MINUTE_TICKS);
+            secondsUntilNextDrop = (int)(ModProvider.config().timeMin * MINUTE);
         }
     }
 
@@ -88,7 +88,7 @@ public class AirdropSpawner extends WorldSavedData {
     }
 
     public int getDropTime() {
-        return (int)(ModProvider.config().timeDrop * MINUTE_TICKS);
+        return (int)(ModProvider.config().timeDrop * MINUTE);
     }
 
     @Nullable
@@ -112,8 +112,8 @@ public class AirdropSpawner extends WorldSavedData {
 
         AirdropHandle handle = dropAirdrop(world, x, z, getLootLevel(), getDropTime(), false);
 
-        int minTime = (int)(ModProvider.config().timeMin * MINUTE_TICKS);
-        int maxTime = (int)(ModProvider.config().timeMax * MINUTE_TICKS);
+        int minTime = (int)(ModProvider.config().timeMin * MINUTE);
+        int maxTime = (int)(ModProvider.config().timeMax * MINUTE);
 
         if(minTime >= maxTime) {
             maxTime = minTime + 1;
