@@ -36,7 +36,7 @@ public class AirdropLevelCondition implements LootCondition
     {
         public Serializer()
         {
-            super(new ResourceLocation(ModProvider.MODID, "airdrop_level"), AirdropLevelCondition.class);
+            super(new ResourceLocation(ModProvider.MODID, "level"), AirdropLevelCondition.class);
         }
 
         public void serialize(JsonObject json, AirdropLevelCondition value, JsonSerializationContext context)
