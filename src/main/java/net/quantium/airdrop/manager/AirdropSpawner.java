@@ -26,10 +26,7 @@ import java.util.Random;
 
 public class AirdropSpawner extends WorldSavedData {
     public static final String ID = ModProvider.MODID + ":spw";
-    public static final int MIN_TIME = 60 * 40;
-    public static final int MAX_TIME = 60 * 80;
-    public static final int AIRDROP_SPAWN_SIGMA_RADIUS = 150;
-    public static final int AIRDROP_DELAY_TIME = 60 * 5;
+    public static final int MINUTE_TICKS = 20 * 60;
 
     public static AirdropSpawner get() {
         MapStorage storage = Objects.requireNonNull(DimensionManager.getWorld(0).getMapStorage());
@@ -50,7 +47,7 @@ public class AirdropSpawner extends WorldSavedData {
         super(ID);
     }
 
-    private int secondsUntilNextDrop = MIN_TIME;
+    private int secondsUntilNextDrop = (int)(ModProvider.config().timeMin * MINUTE_TICKS);
     private int airdropsDropped = 0;
     private final Random random = new Random();
 
@@ -60,7 +57,7 @@ public class AirdropSpawner extends WorldSavedData {
         secondsUntilNextDrop = nbt.getInteger("SecondsUntilNextDrop");
 
         if(!nbt.hasKey("SecondsUntilNextDrop")) {
-            secondsUntilNextDrop = MIN_TIME;
+            secondsUntilNextDrop = (int)(ModProvider.config().timeMin * MINUTE_TICKS);
         }
     }
 
@@ -91,7 +88,7 @@ public class AirdropSpawner extends WorldSavedData {
     }
 
     public int getDropTime() {
-        return AIRDROP_DELAY_TIME;
+        return (int)(ModProvider.config().timeDrop * MINUTE_TICKS);
     }
 
     @Nullable
@@ -105,7 +102,7 @@ public class AirdropSpawner extends WorldSavedData {
         WorldServer world = DimensionManager.getWorld(0);
         BlockPos spawn = world.getSpawnPoint();
 
-        float radius = (float) (random.nextGaussian() * AIRDROP_SPAWN_SIGMA_RADIUS);
+        float radius = (float) (random.nextGaussian() * ModProvider.config().radius);
         float angle = (float) (random.nextFloat() * Math.PI * 2);
         float dx = radius * MathHelper.cos(angle);
         float dz = radius * MathHelper.sin(angle);
@@ -115,8 +112,15 @@ public class AirdropSpawner extends WorldSavedData {
 
         AirdropHandle handle = dropAirdrop(world, x, z, getLootLevel(), getDropTime(), false);
 
+        int minTime = (int)(ModProvider.config().timeMin * MINUTE_TICKS);
+        int maxTime = (int)(ModProvider.config().timeMax * MINUTE_TICKS);
+
+        if(minTime >= maxTime) {
+            maxTime = minTime + 1;
+        }
+
         airdropsDropped++;
-        secondsUntilNextDrop = MIN_TIME + random.nextInt(MAX_TIME - MIN_TIME);
+        secondsUntilNextDrop = minTime + random.nextInt(maxTime - minTime);
 
         return handle;
     }

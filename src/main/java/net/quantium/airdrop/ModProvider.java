@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -51,6 +52,7 @@ public class ModProvider {
     @Mod.Instance(MODID)
     private static ModProvider instance;
     private Logger logger;
+    private ModConfig config;
 
     public static ModProvider instance() {
         return instance;
@@ -60,8 +62,13 @@ public class ModProvider {
         return instance.logger;
     }
 
+    public static ModConfig config() {
+        return instance.config;
+    }
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        config = ModConfig.config(new Configuration(event.getSuggestedConfigurationFile()));
         logger = event.getModLog();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(Events.class);
