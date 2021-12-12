@@ -16,6 +16,27 @@
           "weight": 5
         }
       ]
+    },
+
+    {
+      "name": "supp",
+      "rolls": 1,
+
+      "conditions": [{ "condition": "qairdrop:level", "min": 2 }],
+
+      "entries": [
+        {
+          "type": "item",
+          "name": "minecraft:ender_pearl",
+          "weight": 15
+        },
+
+        {
+          "type": "item",
+          "name": "minecraft:emerald",
+          "weight": 10
+        }
+      ]
     }
   ]
 }

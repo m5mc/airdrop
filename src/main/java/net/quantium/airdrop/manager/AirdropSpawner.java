@@ -84,7 +84,7 @@ public class AirdropSpawner extends WorldSavedData {
     }
 
     public int getLootLevel() {
-        return 0;
+        return airdropsDropped;
     }
 
     public int getDropTime() {
